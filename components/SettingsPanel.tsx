@@ -10,6 +10,8 @@ interface ModelOption {
 }
 
 const FALLBACK_MODELS: ModelOption[] = [
+  { id: "openai/gpt-oss-20b:free", name: "GPT-OSS 20B (free)" },
+  { id: "google/gemma-4-31b-it:free", name: "Gemma 4 31B (free)" },
   { id: "anthropic/claude-sonnet-4.5", name: "Claude Sonnet 4.5" },
   { id: "anthropic/claude-3.5-haiku", name: "Claude 3.5 Haiku" },
   { id: "openai/gpt-4o", name: "GPT-4o" },
@@ -93,12 +95,26 @@ export default function SettingsPanel() {
           />
           <div>
             <label className="mb-1 block text-[11px] uppercase tracking-wide text-white/40">AI Model</label>
+            <select
+              value={settings.model}
+              onChange={(e) => updateSettings({ model: e.target.value })}
+              className="w-full rounded-md border border-surface-border bg-surface-card px-2.5 py-1.5 text-xs text-white outline-none focus:border-brand/60"
+            >
+              {!models.some((m) => m.id === settings.model) && settings.model && (
+                <option value={settings.model}>{settings.model} (custom)</option>
+              )}
+              {models.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.name}
+                </option>
+              ))}
+            </select>
             <input
               list="model-options"
               value={settings.model}
               onChange={(e) => updateSettings({ model: e.target.value })}
-              placeholder="anthropic/claude-sonnet-4.5"
-              className="w-full rounded-md border border-surface-border bg-surface-card px-2.5 py-1.5 text-xs text-white outline-none focus:border-brand/60"
+              placeholder="or type any OpenRouter model ID directly"
+              className="mt-1.5 w-full rounded-md border border-surface-border bg-surface-card px-2.5 py-1.5 text-xs text-white outline-none focus:border-brand/60"
             />
             <datalist id="model-options">
               {models.map((m) => (

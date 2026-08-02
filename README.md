@@ -4,6 +4,9 @@ Company intelligence, distilled in minutes. Enter a company name or website URL 
 
 Built for the "Company Research Assistant" take-home assignment. Single unified Next.js project (frontend + backend API routes), no database, no auth.
 
+**Live demo:** https://company-research-ai-inky.vercel.app
+**Repository:** https://github.com/HarshitaRajpoot/ai-research-assistant
+
 ## Features
 
 - **Dual input** - accepts a company name (e.g. `Stripe`) or a website URL (e.g. `https://stripe.com`). If given a name, it resolves the official website via Serper.dev first.
@@ -61,7 +64,7 @@ Copy `.env.example` to `.env.local` if you want defaults pre-filled instead of p
 ### Getting API keys
 
 - **Serper.dev**: sign up at https://serper.dev - the free tier includes a batch of search credits. Copy the API key from your dashboard.
-- **OpenRouter**: sign up at https://openrouter.ai, create a key under https://openrouter.ai/keys, and add a small amount of credit (most models cost fractions of a cent per report). Any model slug shown in the Settings model picker will work.
+- **OpenRouter**: sign up at https://openrouter.ai and create a key under https://openrouter.ai/keys - no payment required. The Settings panel defaults to `openai/gpt-oss-20b:free`, one of several `:free`-suffixed models OpenRouter hosts at no cost (20 requests/min, 50/day on a plain free account). Any paid model slug works too if you'd rather add credit (most cost fractions of a cent per report).
 - **Discord bot (optional, bonus feature)**:
   1. Go to https://discord.com/developers/applications -> **New Application**.
   2. Open the **Bot** tab -> **Reset Token** -> copy it (this is your `Bot Token`).
@@ -127,4 +130,3 @@ components/
 - **Crawling** is best-effort: some sites (Cloudflare/Akamai-protected, JS-only SPAs) will block or return little content from a plain server-side fetch. The app fails gracefully with a clear error message rather than hanging or crashing, and search snippets from Serper still get used for the AI analysis even if crawling comes back thin.
 - **Any OpenRouter model** can be selected, so the AI call cannot rely on provider-specific "JSON mode" - instead the prompt requests strict JSON and the response is parsed defensively with one automatic retry if the model's first reply isn't valid JSON.
 - Chat history and settings are kept only in the browser (React state + `localStorage`) - refreshing the page starts a new conversation, per the "no database, no report history required" spec.
-- This project was scaffolded and reviewed with AI assistance (Claude) in a single working session; every file was hand-reviewed, and the full pipeline was smoke-tested locally (production build, PDF rendering, and every API route's error paths) before hand-off.

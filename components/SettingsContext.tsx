@@ -15,7 +15,7 @@ export interface SettingsState {
 const DEFAULT_SETTINGS: SettingsState = {
   serperKey: "",
   openrouterKey: "",
-  model: "anthropic/claude-sonnet-4.5",
+  model: "openai/gpt-oss-20b:free",
   discordBotToken: "",
   discordChannelId: "",
   applicantName: "",
